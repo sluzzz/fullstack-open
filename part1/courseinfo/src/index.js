@@ -43,7 +43,6 @@ const App = () => {
   const Content = props => {
     return (
       <div>
-        {/* {course.parts[0].name} {course.parts[0].exercises} */}
         <Part part={props.parts[0]} />
         <Part part={props.parts[1]} />
         <Part part={props.parts[2]} />
@@ -55,7 +54,7 @@ const App = () => {
     return (
       <div>
         <p>
-          Number of exercises{' '}
+          Number of exercises
           {props.parts[0].exercises +
             props.parts[1].exercises +
             props.parts[2].exercises}
