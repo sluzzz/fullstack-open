@@ -35,20 +35,35 @@ const App = () => {
         <Stat text="all" value={all} />
         <Stat text="average" value={all / 3} />
         <Stat text="positive" value={(good / all) * 100} />
-        %ovaj znak ne valja i average ne valja
+        {'%'} ovaj znak ne valja i average ne valja
       </div>
     );
+  };
+
+  const handleGoodClick = () => {
+    setGood(good + 1);
+  };
+
+  const handleNeutralClick = () => {
+    setNeutral(neutral + 1);
+  };
+
+  const handleBadClick = () => {
+    setBad(bad + 1);
   };
 
   return (
     <div>
       <h1>give feedback</h1>
-      <Button name="good" />
-      <Button name="neutral" />
-      <Button name="bad" />
-      <button>ne valjaju buttoni u redu s reactom</button>
-      <button>n</button>
-      <button>b</button>
+      <button name="good" onClick={handleGoodClick}>
+        good
+      </button>
+      <button name="neutral" onClick={handleNeutralClick}>
+        neutral
+      </button>
+      <button name="bad" onClick={handleBadClick}>
+        bad
+      </button>
       <h1>statistics</h1>
       <Statistics />
     </div>
