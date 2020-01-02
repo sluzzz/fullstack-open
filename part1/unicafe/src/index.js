@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+// todo buttons nisu isti ko na primjeru al nije tolko bitno
+
 const App = () => {
   // save clicks of each button to own state
   const [good, setGood] = useState(0);
@@ -8,38 +10,72 @@ const App = () => {
   const [bad, setBad] = useState(0);
   const all = good + neutral + bad;
 
-  const Button = ({ name }) => {
+  const Button = ({ name, onClick }) => {
     return (
       <div>
-        <button>{name}</button>
+        <button onClick={onClick}>{name}</button>
       </div>
     );
   };
 
-  const Stat = ({ text, value }) => {
-    return (
-      <div>
+  const Statistic = ({ text, value }) => {
+    if (text === 'positive') {
+      return (
         <p>
-          {text} {value}
+          {text} {value} %
         </p>
-      </div>
+      );
+    }
+
+    return (
+      <p>
+        {text} {value}
+      </p>
     );
   };
 
   const Statistics = props => {
+    if (all === 0) return <div>No feedback given</div>;
+
     return (
-      <div>
-        <Stat text="good" value={good} />
-        <Stat text="neutral" value={neutral} />
-        <Stat text="bad" value={bad} />
-        <Stat text="all" value={all} />
-        <Stat text="average" value={all / 3} />
-        <Stat text="positive" value={(good / all) * 100} />
-        {'%'} ovaj znak ne valja i average ne valja
-      </div>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <Statistic text="good" value={good} />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Statistic text="neutral" value={neutral} />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Statistic text="bad" value={bad} />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Statistic text="all" value={all} />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Statistic text="average" value={(good * 1 + bad * -1) / all} />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <Statistic text="positive" value={(good / all) * 100} />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     );
   };
 
+  // todo refractor these
   const handleGoodClick = () => {
     setGood(good + 1);
   };
@@ -55,15 +91,15 @@ const App = () => {
   return (
     <div>
       <h1>give feedback</h1>
-      <button name="good" onClick={handleGoodClick}>
+      <Button name="good" onClick={handleGoodClick}>
         good
-      </button>
-      <button name="neutral" onClick={handleNeutralClick}>
+      </Button>
+      <Button name="neutral" onClick={handleNeutralClick}>
         neutral
-      </button>
-      <button name="bad" onClick={handleBadClick}>
+      </Button>
+      <Button name="bad" onClick={handleBadClick}>
         bad
-      </button>
+      </Button>
       <h1>statistics</h1>
       <Statistics />
     </div>
