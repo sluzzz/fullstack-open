@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 import Person from './components/Person';
+// import Filter from './components/Filter';
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-1234567' }
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+  const [filter, setFilter] = useState('');
+  const [filteredPersons, setFilteredPersons] = useState([
+    { name: 'ttttttt', number: 'tttt' }
+  ]);
 
   const addPerson = e => {
     e.preventDefault();
@@ -37,9 +45,31 @@ const App = () => {
     <Person key={person.name} person={person} />
   ));
 
+  const handleFilterChange = e => {
+    setFilter(e.target.value);
+    //if filtered is empty show all, if not empty show matches
+    for (let i = 0; i < persons.length; i++) {
+      if (persons[i].name.indexOf(filter) !== -1) {
+        setFilteredPersons(filteredPersons.concat(persons[i]));
+      } else {
+        console.log('not found');
+      }
+    }
+  };
+
+  const filteredPersonsMapped = filteredPersons.map(person => (
+    <Person key={person.name} person={person} />
+  ));
+
+  console.log(filteredPersonsMapped);
+
   return (
     <div>
       <h2>Phonebook</h2>
+      filter shown with
+      <input onChange={handleFilterChange} />
+      {/* <Filter persons={persons} /> */}
+      <h2>add a new</h2>
       <form onSubmit={addPerson}>
         <div>
           name: <input onChange={handleNameChange} value={newName} />
@@ -53,7 +83,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       {personsMapped}
-      <div>debug: {newName}</div>
+      {/* {filteredPersons ? { personsMapped } : { filteredPersonsMapped }} */}
     </div>
   );
 };
