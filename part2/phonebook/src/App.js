@@ -12,9 +12,6 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
-  const [filteredPersons, setFilteredPersons] = useState([
-    { name: 'ttttttt', number: 'tttt' }
-  ]);
 
   const addPerson = e => {
     e.preventDefault();
@@ -41,27 +38,13 @@ const App = () => {
     setNewNumber(e.target.value);
   };
 
-  const personsMapped = persons.map(person => (
-    <Person key={person.name} person={person} />
-  ));
-
   const handleFilterChange = e => {
-    setFilter(e.target.value);
-    //if filtered is empty show all, if not empty show matches
-    for (let i = 0; i < persons.length; i++) {
-      if (persons[i].name.indexOf(filter) !== -1) {
-        setFilteredPersons(filteredPersons.concat(persons[i]));
-      } else {
-        console.log('not found');
-      }
-    }
+    setFilter(e.target.value.toLowerCase());
   };
 
-  const filteredPersonsMapped = filteredPersons.map(person => (
-    <Person key={person.name} person={person} />
-  ));
-
-  console.log(filteredPersonsMapped);
+  const results = filter
+    ? persons.filter(person => person.name.toLowerCase().search(filter) !== -1)
+    : persons;
 
   return (
     <div>
@@ -82,8 +65,9 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {personsMapped}
-      {/* {filteredPersons ? { personsMapped } : { filteredPersonsMapped }} */}
+      {results.map(person => (
+        <Person key={person.name} person={person} />
+      ))}
     </div>
   );
 };
