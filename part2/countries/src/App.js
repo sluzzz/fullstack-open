@@ -33,6 +33,8 @@ function App() {
     if (results.length > 10) limit = 'Too many matches, specify another filter';
   }
 
+  if (filter === '') results = [];
+
   return (
     <div>
       find countries
@@ -45,7 +47,5 @@ function App() {
     </div>
   );
 }
-
-// todo hide starting countries
 
 export default App;
