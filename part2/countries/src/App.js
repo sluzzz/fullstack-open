@@ -21,12 +21,6 @@ function App() {
 
   let limit = '';
   let results = [];
-  // let results = filter
-  //   ? countries.filter(
-  //       country => country.name.toLowerCase().search(filter) !== -1
-  //     )
-  //   : countries;
-  // if (results.length > 10) limit = 'Too many matches, specify another filter';
 
   if (filter) {
     results = countries.filter(
@@ -36,17 +30,23 @@ function App() {
   }
 
   if (filter === '') results = [];
-  console.log(results);
+
+  let display;
+  if (limit) {
+    display = <div>{limit}</div>;
+  } else if (results.length === 1) {
+    display = <div></div>;
+  } else {
+    display = results.map(country => (
+      <Country key={country.name} country={country} />
+    ));
+  }
 
   return (
     <div>
       find countries
       <input onChange={handleChange} value={filter} />
-      {limit ? (
-        <div>{limit}</div>
-      ) : (
-        results.map(country => <Country key={country.name} country={country} />)
-      )}
+      {display}
       {results.length === 1 ? (
         <Details
           name={results[0].name}
@@ -56,12 +56,10 @@ function App() {
           flag={results[0].flag}
         />
       ) : (
-        <div>results > 1</div>
+        <div></div>
       )}
     </div>
   );
 }
 
 export default App;
-
-// todo map list of languages and remove country filtered name
