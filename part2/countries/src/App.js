@@ -5,6 +5,9 @@ import axios from 'axios';
 import Country from './components/Country';
 import Details from './components/Details';
 
+console.log(process.env.REACT_APP_DARKSKY_API_KEY);
+console.log(process.env.NODE_ENV);
+
 function App() {
   const [filter, setFilter] = useState('');
   const [countries, setCountries] = useState([]);
@@ -31,6 +34,10 @@ function App() {
 
   if (filter === '') results = [];
 
+  const handleShowClick = e => {
+    setFilter(e.target.id.toLowerCase());
+  };
+
   let display;
   if (limit) {
     display = <div>{limit}</div>;
@@ -38,7 +45,7 @@ function App() {
     display = <div></div>;
   } else {
     display = results.map(country => (
-      <Country key={country.name} country={country} />
+      <Country key={country.name} country={country} onClick={handleShowClick} />
     ));
   }
 
