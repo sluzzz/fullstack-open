@@ -1,9 +1,12 @@
 import React from 'react';
 
-const Number = ({ person }) => {
+const Number = ({ person, onClick }) => {
   return (
     <div>
-      {person.name} {person.number}
+      {person.name} {person.number}{' '}
+      <button id={person.id} onClick={onClick} name={person.name}>
+        delete
+      </button>
     </div>
   );
 };
